@@ -18,3 +18,5 @@ const blogs = new Schema({
     }
 
 },{timestamps:true})
+
+export const Blogs = mongoose.model("Blogs", blogs);
