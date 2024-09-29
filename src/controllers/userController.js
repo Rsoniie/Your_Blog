@@ -77,6 +77,8 @@ const LoginUser = async (req, res) => {
             return res.status(400).json({message: 'Invalid Credentials'});
         }
         const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
+        console.log("This is login");
+        console.log(token);
         res.status(200).json({message: 'User logged In successfully', token});
      }
      catch (error) {
@@ -87,26 +89,31 @@ const LoginUser = async (req, res) => {
 
 const PostBlog = async (req, res) => {
     try{
-
-
-        
+        const logged_user = req.user;
+        if(!logged_user)
+        {
+            return res.status(400).json({message: 'Logged In user not found'});
+        }
+        // console.log("This is logged_user", logged_user.userId);
         const {blog_heading, blog_body} = req.body;
 
         if(!blog_heading || !blog_body)
         {
             return res.status(400).json({message: 'Heading and body both required'});
         }
-    
+        
+
+        const this_id = logged_user.userId;
         const newBlog = new Blogs({
             blog_heading, 
-            blog_body
+            blog_body,
+            this_id
         });
         
-
-        await newBlog.save();
-        res.status(200).json({message:"Posted Sucesssfully"});
-
-        
+        const savedBlog = await newBlog.save();
+        res.status(200).json({message:"Posted Sucesssfully", blog: savedBlog});
+       
+  
     }
     catch (error) {
         console.error('Error Login user:', error);

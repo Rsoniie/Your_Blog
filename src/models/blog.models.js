@@ -15,6 +15,10 @@ const blogs = new Schema({
     blog_keywords : [String],
     blog_img: {
         type: String
+    },
+    user_id: {
+        type: Schema.Types.ObjectId,
+        ref: "Users"
     }
 
 },{timestamps:true})
