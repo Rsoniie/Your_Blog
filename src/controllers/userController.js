@@ -1,6 +1,12 @@
 import {User} from '../models/user.models.js'
-import bcrypt from 'bcryptjs'
+import { Blogs } from '../models/blog.models.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
+
+
+
+const SECRET_KEY = process.env.SECRET_KEY;
 
 
 const CreateUser = async (req, res) => {
@@ -70,8 +76,8 @@ const LoginUser = async (req, res) => {
         {
             return res.status(400).json({message: 'Invalid Credentials'});
         }
-
-        res.status(200).json({message: 'User logged In successfully'});
+        const token = jwt.sign({ userId: user._id }, SECRET_KEY, { expiresIn: '1h' });
+        res.status(200).json({message: 'User logged In successfully', token});
      }
      catch (error) {
         console.error('Error Login user:', error);
@@ -79,9 +85,39 @@ const LoginUser = async (req, res) => {
     }
 };
 
+const PostBlog = async (req, res) => {
+    try{
+
+
+        
+        const {blog_heading, blog_body} = req.body;
+
+        if(!blog_heading || !blog_body)
+        {
+            return res.status(400).json({message: 'Heading and body both required'});
+        }
+    
+        const newBlog = new Blogs({
+            blog_heading, 
+            blog_body
+        });
+        
+
+        await newBlog.save();
+        res.status(200).json({message:"Posted Sucesssfully"});
+
+        
+    }
+    catch (error) {
+        console.error('Error Login user:', error);
+        res.status(500).json({ message: 'Server error, please try again later.' });
+    }
+}
+
 export {
     CreateUser,
     LoginUser,
+    PostBlog,
 }
 
 
