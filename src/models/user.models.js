@@ -14,11 +14,6 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    blogs :[{
-
-        type: Schema.Types.ObjectId,
-        ref: "Blogs"
-    }],
     profile_pic: {
         type: String,
     },
