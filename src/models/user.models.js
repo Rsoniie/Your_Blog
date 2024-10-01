@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     profile_pic: {
         type: String,
     },
+    liked_blogs: [{
+        type: Schema.Types.ObjectId,
+        ref: "Blogs"
+    }]
     
 
     
