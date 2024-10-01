@@ -141,6 +141,31 @@ const GetMyBlogs = async (req, res) =>
         console.error('Error fetching Blogs:', error);
         res.status(500).json({ message: 'Server error, please try again later.' });
     }
+};
+
+const MyLikedBlogs = async (req, res) => {
+
+    const user_id = req.user.userId;
+    console.log(user_id);
+    if(!user_id)
+    {
+        return res.status(401).json({message: "User not found"});
+    }
+    try
+    {
+        const curr_user = await User.findById(user_id);
+
+        const Liked_blogs = curr_user.liked_blogs;
+
+        res.status(200).json({message: "This is LikedBlogs", Liked_blogs});
+
+    }
+    catch(error)
+    {
+        console.log("This is the error", error);
+        return res.status(402).json({message: "Error", error});
+    }
+    // res.status(200).json({message: 'connection done'});
 }
 
 
@@ -150,6 +175,7 @@ export {
     LoginUser,
     PostBlog,
     GetMyBlogs,
+    MyLikedBlogs
 }
 
 
