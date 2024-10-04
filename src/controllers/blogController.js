@@ -8,7 +8,7 @@ const All_Blogs = async (req, res) => {
 
     const allblogs = await Blogs.find();
     return res.status(200).json({message: 'All blogs are requested', allblogs});
-}
+};
 
 const Like_Blog = async (req, res) => {
 
@@ -48,9 +48,32 @@ const Like_Blog = async (req, res) => {
       return res.status(401).json({message: "error", error})
     }
 
-}
+};
+
+const Del_Blog = async (req, res) => {
+
+
+    try{
+     const blog_id = req.params.id;
+     if(!blog_id)
+     {
+        return res.status(400).json({message: "No blog is selected"});
+     }
+
+     const curr_blog = await Blogs.findByIdAndDelete(blog_id);
+
+     return res.status(200).json({message: "Blog Deleted Successfully"});
+    }
+    catch(error)
+    {
+        console.log("This is error while fetching the blog_Id", error);
+        return res.status(500).json({message: "Internal server error", error});
+    }
+
+     
+};
 
 
 
 
-export {Like_Blog, All_Blogs};
+export {Like_Blog, All_Blogs, Del_Blog};

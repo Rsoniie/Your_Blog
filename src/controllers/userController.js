@@ -165,8 +165,9 @@ const MyLikedBlogs = async (req, res) => {
         console.log("This is the error", error);
         return res.status(402).json({message: "Error", error});
     }
-    // res.status(200).json({message: 'connection done'});
-}
+};
+
+
 
 
 
