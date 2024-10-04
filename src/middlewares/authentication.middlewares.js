@@ -6,10 +6,7 @@ const secret_key = process.env.SECRET_KEY
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-//    console.log('This is authHeader', authHeader);
   if (!token) return res.sendStatus(401);
-//   console.log(token)
-
   jwt.verify(token, secret_key, (err, user) => {
     if (err) return res.sendStatus(403);
 
@@ -18,4 +15,5 @@ function authenticateToken(req, res, next) {
   });
 }
 
-export default authenticateToken
+export default authenticateToken;
+

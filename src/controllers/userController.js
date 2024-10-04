@@ -94,7 +94,6 @@ const PostBlog = async (req, res) => {
         {
             return res.status(400).json({message: 'Logged In user not found'});
         }
-        // console.log("This is logged_user", logged_user.userId);
         const {blog_heading, blog_body} = req.body;
 
         if(!blog_heading || !blog_body)
@@ -175,6 +174,7 @@ const LogoutUser = async (req, res) => {
             return res.status(400).json({message: "No user found"});
         }
         await User.findByIdAndUpdate(user_id, { $inc: { tokenVersion: 1 } });
+        
         return res.status(200).json({ message: 'User logged out, token expired' });
 
 
