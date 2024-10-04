@@ -101,12 +101,17 @@ const PostBlog = async (req, res) => {
             return res.status(400).json({message: 'Heading and body both required'});
         }
         
-
+        const usr = await User.findByIdAndUpdate(user_id);
+        console.log(usr.username);
         console.log(user_id);
+        const user = usr.username;
+        
         const newBlog = new Blogs({
             blog_heading, 
             blog_body,
-            user_id
+            user_id,
+            user
+
         });
         
         const savedBlog = await newBlog.save();

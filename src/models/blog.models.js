@@ -40,7 +40,11 @@ const blogs = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Users"
         }
-    }]
+    }],
+    user: {
+        type: String,
+        required: true
+    }
 
 },{timestamps:true})
 
