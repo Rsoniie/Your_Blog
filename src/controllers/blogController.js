@@ -73,7 +73,35 @@ const Del_Blog = async (req, res) => {
      
 };
 
+const Comment_Blog = async (req, res) => {
+
+    try{
+       const blog_id = req.params.id;
+       console.log("This is blog_id", blog_id);
+       const blog = await Blogs.findByIdAndUpdate(blog_id);
+       const {comment} = req.body;
+       const user = req.user.userId;
+
+       const this_comment = {
+        comment,
+        user
+       }
+
+       blog.comments.push(this_comment);
+
+       await blog.save();
+       return res.status(200).json({message: "Commented Sucessfully"});
+    }
+    catch(error)
+    {
+        console.log("This is error while fetching the blog", error);
+        return res.status(400).json({message: "Internal server error", error});
+    }
+};
 
 
 
-export {Like_Blog, All_Blogs, Del_Blog};
+
+
+export {Like_Blog, All_Blogs,
+     Del_Blog, Comment_Blog};

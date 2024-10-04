@@ -30,7 +30,17 @@ const blogs = new Schema({
     likes: {
         type : Number, 
         default: 0
-    }
+    },
+    comments: [{
+        comment: {
+            type: String,
+            required: true,
+        },
+        commented_user:{
+            type: Schema.Types.ObjectId,
+            ref: "Users"
+        }
+    }]
 
 },{timestamps:true})
 
