@@ -1,5 +1,5 @@
 import express from 'express'
-import { CreateUser, GetMyBlogs, LoginUser, PostBlog, MyLikedBlogs } from '../controllers/userController.js';
+import { CreateUser, GetMyBlogs, LoginUser, PostBlog, MyLikedBlogs, LogoutUser} from '../controllers/userController.js';
 import authenticateToken from '../middlewares/authentication.middlewares.js';
 
 import { Router } from 'express';
@@ -15,6 +15,8 @@ router.route('/PostBlog').post(authenticateToken, PostBlog);
 router.route('/GetMyBlogs').get(authenticateToken, GetMyBlogs);
 
 router.route('/MyLikedBlogs').get(authenticateToken, MyLikedBlogs);
+
+router.route('/LogoutUser').get(authenticateToken, LogoutUser);
 
 
 

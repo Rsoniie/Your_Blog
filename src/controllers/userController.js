@@ -167,6 +167,23 @@ const MyLikedBlogs = async (req, res) => {
     }
 };
 
+const LogoutUser = async (req, res) => {
+    try {
+        const user_id = req.user.userId;
+        if(!user_id)
+        {
+            return res.status(400).json({message: "No user found"});
+        }
+        await User.findByIdAndUpdate(user_id, { $inc: { tokenVersion: 1 } });
+        return res.status(200).json({ message: 'User logged out, token expired' });
+
+
+    } catch (error) {
+        console.log("This is the error while logging out user", error);
+        return res.status(400).json({message: "Internal server error", error});
+    }
+};
+
 
 
 
@@ -176,7 +193,8 @@ export {
     LoginUser,
     PostBlog,
     GetMyBlogs,
-    MyLikedBlogs
+    MyLikedBlogs,
+    LogoutUser
 }
 
 
