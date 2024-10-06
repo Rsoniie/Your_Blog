@@ -33,8 +33,8 @@ const Like_Blog = async (req, res) => {
         curr_user.liked_blogs.push(blog_id);
         await curr_blog.save();
         await curr_user.save();
-
-          return res.status(200).json({message: "Liked this Blog"});
+         const newlikes = curr_blog.likes;
+          return res.status(200).json({message: "Liked this Blog", updatedLikes:  newlikes});
         }
         else 
         {
